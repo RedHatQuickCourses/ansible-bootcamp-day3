@@ -1,3 +1,8 @@
 = Appendix
 
-FIXME: Content for Appendix...
+For additional reference and deeper learning on CI/CD pipelines:
+
+. https://docs.openshift.com/container-platform/latest/cicd/pipelines/understanding-openshift-pipelines.html[OpenShift Pipelines Documentation]
+. https://tekton.dev/docs/[Tekton Documentation]
+. https://docs.ansible.com/ansible/latest/collections_guide/index.html[Ansible Collections Guide]
+. https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/using_automation_hub/index[Private Automation Hub Documentation]

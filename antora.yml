@@ -1,5 +1,5 @@
 name: ansible-bootcamp-day3
-title: FIXME Course Title
+title: Ansible Boot Camp Day 3
 version: 1
 nav:
 - modules/ROOT/nav.adoc

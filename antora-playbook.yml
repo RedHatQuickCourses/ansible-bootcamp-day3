@@ -1,5 +1,5 @@
 site:
-  title: FIXME Course Title
+  title: "Ansible Boot Camp Day 3"
   start_page: ansible-bootcamp-day3::index.adoc
 
 content:

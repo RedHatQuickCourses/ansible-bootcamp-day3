@@ -1,7 +1,14 @@
-= Chapter 2
+= Lab: Creating a CI/CD Pipeline
 
-In this section, we cover... FIXME
+We will create a complete CI/CD pipeline for Ansible collection development using Tekton on OpenShift. This includes building a pipeline that automatically lints, tests, builds, publishes, and approves Ansible collections to Private Automation Hub, with webhook integration for automated triggering on git commits.
 
+== Learning Objectives
 
-- Add or remove section entries in the `antora.yaml` file as needed.
-- Ensure you create or delete the corresponding directory for the chapter accordingly.
+After completing this module, you will be able to:
+
+- Understand CI/CD concepts and their application to Ansible automation
+- Create and configure Tekton pipelines in OpenShift
+- Set up automated testing and linting for Ansible collections
+- Implement automated publishing workflows to Private Automation Hub
+- Configure webhook integrations for git-triggered deployments
+- Monitor and troubleshoot CI/CD pipeline execution
