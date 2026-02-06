@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Section 1 :: FIXME Course Title</title>
+    <title>Prerequisites :: Ansible Boot Camp Day 3</title>
     <link rel="prev" href="index.html">
-    <link rel="next" href="../chapter3/index.html">
+    <link rel="next" href="section2.html">
     <meta name="generator" content="Antora 3.1.3">
     <link rel="stylesheet" href="../../../_/css/site.css">
     <script>var uiRootPath = '../../../_'</script>
@@ -15,7 +15,7 @@
   <nav class="navbar">
     <div class="navbar-brand">
       <a class="navbar-item" href="https://www.redhat.com" target="_blank"><img src="../../../_/img/redhat-logo.png" height="40px" alt="Red Hat"></a>
-      <a class="navbar-item" style="font-size: 24px; color: white" href="../../..">FIXME Course Title</a>
+      <a class="navbar-item" style="font-size: 24px; color: white" href="../../..">Ansible Boot Camp Day 3</a>
       <button class="navbar-burger" data-target="topbar-nav">
         <span></span>
         <span></span>
@@ -35,7 +35,7 @@
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
   <nav class="nav-menu">
-    <h3 class="title"><a href="../index.html">FIXME Course Title</a></h3>
+    <h3 class="title"><a href="../index.html">Ansible Boot Camp Day 3</a></h3>
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
@@ -74,10 +74,13 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="index.html">Chapter 2</a>
+    <a class="nav-link" href="index.html">Lab: Creating a CI/CD Pipeline</a>
 <ul class="nav-list">
   <li class="nav-item is-current-page" data-depth="2">
-    <a class="nav-link" href="section1.html">Section 1</a>
+    <a class="nav-link" href="section1.html">Prerequisites</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="section2.html">Conclusion</a>
   </li>
 </ul>
   </li>
@@ -111,12 +114,12 @@
 </div>
 <div class="nav-panel-explore" data-panel="explore">
   <div class="context">
-    <span class="title">FIXME Course Title</span>
+    <span class="title">Ansible Boot Camp Day 3</span>
     <span class="version">1</span>
   </div>
   <ul class="components">
     <li class="component is-current">
-      <a class="title" href="../index.html">FIXME Course Title</a>
+      <a class="title" href="../index.html">Ansible Boot Camp Day 3</a>
       <ul class="versions">
         <li class="version is-current is-latest">
           <a href="../index.html">1</a>
@@ -134,9 +137,9 @@
   <a href="../index.html" class="home-link"></a>
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
-    <li><a href="../index.html">FIXME Course Title</a></li>
-    <li><a href="index.html">Chapter 2</a></li>
-    <li><a href="section1.html">Section 1</a></li>
+    <li><a href="../index.html">Ansible Boot Camp Day 3</a></li>
+    <li><a href="index.html">Lab: Creating a CI/CD Pipeline</a></li>
+    <li><a href="section1.html">Prerequisites</a></li>
   </ul>
 </nav>
 </div>
@@ -145,26 +148,1018 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Section 1</h1>
-<div class="ulist">
-<ul>
+<h1 class="page">Prerequisites</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Before starting this lab, ensure you have completed the Ansible Boot Camp Day 3 lab.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_1_introduction"><a class="anchor" href="#_1_introduction"></a>1: Introduction</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>One of the core goals of automation is automating a process end-to-end. In this case, it&#8217;s creating a CI/CD pipeline for Ansible collection builds and updates. This lab will further the development of one of the previous labs, by automating the build and publishing of the development lifecycle of an Ansible collection using <a href="https://tekton.dev" target="_blank" rel="noopener">Tekton</a> and the supported OpenShift Pipelines feature of OpenShift.</p>
+</div>
+<div class="paragraph">
+<p>Upon completion of this lab you will have</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
 <li>
-<p>Create multiple copies of this section as needed.</p>
+<p>A Tekton pipeline running in OpenShift</p>
 </li>
 <li>
-<p>Remove any unnecessary sections or chapter pages.</p>
+<p>The pipeline can be triggered from a push to the collection repo</p>
 </li>
 <li>
-<p>Customize the section as appropriate.</p>
+<p>The pipeline will lint, build, publish and approve the collection into Private Automation Hub</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_2_lab_setup_configuring_your_environment"><a class="anchor" href="#_2_lab_setup_configuring_your_environment"></a>2: Lab Setup: Configuring Your Environment</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Prior to starting the lab, ensure the following tools and services are set up:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Repository for the <code>ansible_bootcamp_my_collection</code> has been created on Gitea</p>
 </li>
 <li>
-<p>Ensure that each page contains a manageable amount of content.</p>
+<p>You have access to your Dev Spaces workspace for your environment</p>
 </li>
-</ul>
+<li>
+<p>Make sure the Gitea repository is <strong>public</strong></p>
+</li>
+</ol>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Lab setup should have been previously completed in <a href="#04-managing-content-automation-hub.adoc" class="xref unresolved">Managing Ansible Content with Private Automation Hub</a>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_3_implementing_the_cicd_pipeline"><a class="anchor" href="#_3_implementing_the_cicd_pipeline"></a>3: Implementing the CI/CD Pipeline</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In this section, we&#8217;ll share how to apply the <strong>collection-pipeline.yml</strong> <a href="https://tekton.dev/docs/pipelines/pipelines" target="_blank" rel="noopener">Pipeline</a> in your OpenShift environment. Also, we will then set up a <a href="https://tekton.dev/docs/triggers/triggerbindings" target="_blank" rel="noopener">Cluster Trigger Binding</a>. Finally, we will set up a webhook in the Gitea repository associated with the Ansible Collection to automatically trigger the pipeline when changes are made.</p>
+</div>
+<div class="sect2">
+<h3 id="_3_1_create_cicd_pipeline_repository"><a class="anchor" href="#_3_1_create_cicd_pipeline_repository"></a>3.1: Create CI/CD Pipeline Repository</h3>
+<div class="paragraph">
+<p>Create another Gitea repository, separate from the <em>ansible_bootcamp_my_collection</em> repository that was created previously in <a href="#04-managing-content-automation-hub.adoc" class="xref unresolved">Managing Ansible Content with Private Automation Hub</a>, which will serve as a working CI/CD pipeline development repository.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Navigate to your <a href="{gitea_console_url}" target="_blank" rel="noopener">Gitea instance</a> and click the <strong>Sign In</strong> button on the upper right hand corner. Enter the username and password using the credentials provided from the <a href="#environment-details.adoc" class="xref unresolved" target="_blank" rel="noopener">Environment Details</a> page and click the <strong>Sign In</strong> button</p>
+</li>
+<li>
+<p>In the top left of the web interface, click on the <strong>+</strong> symbol and select <strong>New Repository</strong>.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/gitea-repo-create.png" alt="gitea repo create">
+</div>
+</div>
+</li>
+<li>
+<p>On the New Repository page, enter <strong>ansible_bootcamp_ci_cd_pipeline</strong> in the <em>Repository Name</em> field.</p>
+</li>
+<li>
+<p>Leave everything else as their default values and click on the button at the bottom, <strong>Create Repository</strong>.</p>
+</li>
+</ol>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/gitea-repo-config.png" alt="gitea repo config">
+</div>
+</div>
+<div class="sect3">
+<h4 id="_3_1_1_clone_cicd_pipeline_repository_into_dev_spaces_workspace"><a class="anchor" href="#_3_1_1_clone_cicd_pipeline_repository_into_dev_spaces_workspace"></a>3.1.1: Clone CI/CD Pipeline Repository into Dev Spaces Workspace</h4>
+<div class="paragraph">
+<p>After an empty repository is created on your Gitea, we need to clone the repository into the workspace to begin creating lab files.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Clone the <em>ansible_bootcamp_ci_cd_pipeline</em> repository you just created into your workspace</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">  git clone {gitea_console_url}/{gitea_user}/ansible_bootcamp_ci_cd_pipeline.git</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>With the repository cloned locally, proceed to the next section where you will begin to populate the repository with Tekton resources.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_3_2_build_tekton_pipeline_on_openshift_container_platform"><a class="anchor" href="#_3_2_build_tekton_pipeline_on_openshift_container_platform"></a>3.2: Build Tekton pipeline on OpenShift Container Platform</h3>
+<div class="sect3">
+<h4 id="_3_2_1_create_the_pipeline_definition"><a class="anchor" href="#_3_2_1_create_the_pipeline_definition"></a>3.2.1: Create the Pipeline Definition</h4>
+<div class="paragraph">
+<p>In the <em>ansible_bootcamp_ci_cd_pipeline</em> directory, create a new file called <code>collection-pipeline.yml</code> with the following content.</p>
+</div>
+<div class="listingblock execute">
+<div class="title">collection-pipeline.yml</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">apiVersion: tekton.dev/v1
+kind: Pipeline
+metadata:
+  name: ansible-collection-ci
+  namespace: aap
+spec:
+  params:
+    - description: The URL of the Git repository to clone.
+      name: collection-url
+      type: string
+    - description: The URL of the Git repository to clone.
+      name: playbook-repo
+      type: string
+    - description: Collection Branch name
+      name: collection-repo-version
+      type: string
+  tasks:
+    - name: clone-playbook
+      taskSpec:
+        metadata: {}
+        spec: null
+        steps:
+          - computeResources: {}
+            image: 'registry.redhat.io/ansible-automation-platform-25/ee-supported-rhel9:latest'
+            name: playbook-install
+            script: |
+              git clone -vvv $(params.playbook-repo)
+              echo "change into playbook dir"
+              cd ansible_bootcamp_ci_cd_pipeline
+              echo "create vars file"
+              cat &lt;&lt;EOF &gt; params.yml
+              ---
+              aap_hostname:  "https://`oc get route aap -n aap -o=jsonpath='{.spec.host}'`"
+              aap_username: "admin"
+              aap_password: "`oc get secret aap-admin-password -n aap -o=jsonpath='{.data.password}' |base64 -d`"
+              collection_url: "$(params.collection-url)"
+              branch: "$(params.collection-repo-version)"
+              EOF
+            workingDir: $(workspaces.source.path)
+        workspaces:
+          - name: source
+      workspaces:
+        - name: source
+          workspace: shared-workspace
+    - name: clone-collection
+      runAfter:
+        - clone-playbook
+      taskSpec:
+        metadata: {}
+        spec: null
+        steps:
+          - computeResources: {}
+            image: 'registry.redhat.io/ansible-automation-platform-25/ee-supported-rhel9:latest'
+            name: collection-clone
+            script: |
+              cd ansible_bootcamp_ci_cd_pipeline
+              ansible-playbook collection-publish.yml --tags git-checkout
+            workingDir: $(workspaces.source.path)
+        workspaces:
+          - name: source
+      workspaces:
+        - name: source
+          workspace: shared-workspace
+    - name: build-collection
+      runAfter:
+        - clone-collection
+      taskSpec:
+        metadata: {}
+        spec: null
+        steps:
+          - computeResources: {}
+            image: 'registry.redhat.io/ansible-automation-platform-25/ee-supported-rhel9:latest'
+            name: build-collection
+            script: |
+              cd ansible_bootcamp_ci_cd_pipeline
+              ansible-playbook collection-publish.yml --tags collection-build
+            workingDir: $(workspaces.source.path)
+        workspaces:
+          - name: source
+      workspaces:
+        - name: source
+          workspace: shared-workspace
+    - name: lint-collection
+      runAfter:
+        - clone-collection
+      taskSpec:
+        metadata: {}
+        spec: null
+        steps:
+          - computeResources: {}
+            image: 'ghcr.io/ansible/community-ansible-dev-tools:latest'
+            name: lint-collection
+            script: |
+              cd collection_repo
+              pip install cowsay
+              ansible-galaxy collection install containers.podman
+              ansible-lint -vvv
+            workingDir: $(workspaces.source.path)
+        workspaces:
+          - name: source
+      workspaces:
+        - name: source
+          workspace: shared-workspace
+    - name: molecule-test
+      runAfter:
+        - build-collection
+        - lint-collection
+      taskSpec:
+        metadata: {}
+        spec: null
+        steps:
+          - computeResources: {}
+            image: 'ghcr.io/ansible/ansible-devspaces:latest'
+            name: molecule-test
+            script: |
+              cd collection_repo/extensions
+              export ANSIBLE_COLLECTIONS_PATH=/workspace/source/collection_repo
+              echo $ANSIBLE_COLLECTIONS_PATH
+              ansible-galaxy collection install git+$(params.collection-url)
+              molecule test -s dad_joke
+            workingDir: $(workspaces.source.path)
+        workspaces:
+          - name: source
+      workspaces:
+        - name: source
+          workspace: shared-workspace
+    - name: create-namespace
+      runAfter:
+        - molecule-test
+      taskSpec:
+        metadata: {}
+        spec: null
+        steps:
+          - computeResources: {}
+            image: 'registry.redhat.io/ansible-automation-platform-25/ee-supported-rhel9:latest'
+            name: create-namespace
+            script: |
+              cd ansible_bootcamp_ci_cd_pipeline
+              ansible-playbook collection-publish.yml --tags pah-namespace
+            workingDir: $(workspaces.source.path)
+        workspaces:
+          - name: source
+      workspaces:
+        - name: source
+          workspace: shared-workspace
+    - name: publish-collection
+      runAfter:
+        - create-namespace
+      taskSpec:
+        metadata: {}
+        spec: null
+        steps:
+          - computeResources: {}
+            image: 'registry.redhat.io/ansible-automation-platform-25/ee-supported-rhel9:latest'
+            name: publish-collection
+            script: |
+              cd ansible_bootcamp_ci_cd_pipeline
+              ansible-playbook collection-publish.yml --tags collection-publish
+            workingDir: $(workspaces.source.path)
+        workspaces:
+          - name: source
+      workspaces:
+        - name: source
+          workspace: shared-workspace
+    - name: approve-collection
+      runAfter:
+        - publish-collection
+      taskSpec:
+        metadata: {}
+        spec: null
+        steps:
+          - computeResources: {}
+            image: 'registry.redhat.io/ansible-automation-platform-25/ee-supported-rhel9:latest'
+            name: approve-collection
+            script: |
+              cd ansible_bootcamp_ci_cd_pipeline
+              ansible-playbook collection-publish.yml --tags collection-approve
+            workingDir: $(workspaces.source.path)
+        workspaces:
+          - name: source
+      workspaces:
+        - name: source
+          workspace: shared-workspace
+  workspaces:
+    - name: shared-workspace</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_3_2_2_create_the_trigger_binding"><a class="anchor" href="#_3_2_2_create_the_trigger_binding"></a>3.2.2: Create the Trigger Binding</h4>
+<div class="paragraph">
+<p>Next create a Trigger Binding that is used to extract information from the webhook payload and make it available to the Tekton Pipeline as parameters.</p>
+</div>
+<div class="paragraph">
+<p>Within the <em>ansible_bootcamp_ci_cd_pipeline</em> directory, create a new file called <code>collection-cluster-trigger-binding.yml</code> with the following content.</p>
+</div>
+<div class="listingblock execute">
+<div class="title">collection-cluster-trigger-binding.yml</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">apiVersion: triggers.tekton.dev/v1beta1
+kind: ClusterTriggerBinding
+metadata:
+  labels:
+    operator.tekton.dev/operand-name: openshift-pipelines-addons
+  name: gitea-push
+spec:
+  params:
+    - name: git-revision
+      value: $(body.head_commit.id)
+    - name: git-commit-message
+      value: $(body.head_commit.message)
+    - name: git-repo-url
+      value: $(body.repository.clone_url)
+    - name: git-repo-name
+      value: $(body.repository.name)
+    - name: content-type
+      value: $(header.Content-Type)</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_3_2_3_apply_pipeline_configurations"><a class="anchor" href="#_3_2_3_apply_pipeline_configurations"></a>3.2.3: Apply Pipeline Configurations</h4>
+<div class="paragraph">
+<p>Now that we have created the necessary configuration files for the Tekton Pipeline and Trigger Binding, we will apply them to the OpenShift Container Platform.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Your Dev Spaces environment is automatically authenticated to the OpenShift cluster, so you can use <code>oc</code> commands without needing to login.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>In the Dev Spaces terminal, change into the <em>ansible_bootcamp_ci_cd_pipeline</em> directory and use the OpenShift CLI to apply the configurations to the OpenShift cluster.</p>
+</div>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cd ansible_bootcamp_ci_cd_pipeline
+oc apply -f collection-pipeline.yml
+oc apply -f collection-cluster-trigger-binding.yml</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_3_2_4_validate_tekton_resources_in_openshift_container_platform"><a class="anchor" href="#_3_2_4_validate_tekton_resources_in_openshift_container_platform"></a>3.2.4: Validate Tekton Resources in OpenShift Container Platform</h4>
+<div class="paragraph">
+<p>Validate the Tekton resources created previously have been successfully created in OpenShift using the Web Console.</p>
+</div>
+<div class="paragraph">
+<p>First, check that the ClusterTriggerBinding was created successfully and is available within OpenShift.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Launch the <a href="{openshift_cluster_console_url}" target="_blank" rel="noopener">OpenShift Web Console</a></p>
+</li>
+<li>
+<p>Select the <strong>htpasswd_provider</strong> button and use the credentials provided in the <a href="#environment-details.adoc" class="xref unresolved" target="_blank" rel="noopener">Environment Details</a> page to login to the OpenShift console if prompted to authenticate.</p>
+</li>
+<li>
+<p>In the left hand menu, expand the <em>Pipelines</em> section and select <strong>Triggers</strong></p>
+</li>
+<li>
+<p>Select the <strong>ClusterTriggerBindings</strong> tab on the <em>Triggers</em> page</p>
+</li>
+<li>
+<p>Verify that <code>gitea-push</code> trigger is present</p>
+</li>
+</ol>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/clustertrigger.png" alt="clustertrigger">
+</div>
+</div>
+<div class="paragraph">
+<p>Next, check that the Pipeline was created successfully and is available within OpenShift.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>In the left hand menu, expand the <em>Pipelines</em> section and select <strong>Pipelines</strong></p>
+</li>
+<li>
+<p>Locate the <strong>ansible-collection-ci</strong> pipeline in the list of pipelines</p>
+</li>
+<li>
+<p>Review the details of the pipeline within the <em>Pipeline details</em> page.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="_images/pipeline.png" alt="pipeline"></span></p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_3_3_create_collection_publish_yml_ansible_playbook"><a class="anchor" href="#_3_3_create_collection_publish_yml_ansible_playbook"></a>3.3: Create collection-publish.yml Ansible Playbook</h3>
+<div class="quoteblock abstract">
+<blockquote>
+The <em>ansible-collection-ci</em> Pipeline references an Ansible Pipeline within the file <code>collection-publish.yml</code> multiple times during its execution.
+</blockquote>
+</div>
+<div class="paragraph">
+<p>Within the <em>ansible_bootcamp_ci_cd_pipeline</em> directory, create an Ansible playbook in the file <code>collection-publish.yml</code> with the following content.</p>
+</div>
+<div class="listingblock execute">
+<div class="title">collection-publish.yml</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">---
+- name: Publish collections to Hub
+  hosts: localhost
+  gather_facts: false
+  vars_files:
+    - params.yml
+  vars:
+    aap_configuration_working_dir: "/workspace/source"
+    aap_request_timeout: 300
+    aap_validate_certs: false
+    ah_overwrite_existing: true
+  no_log: "{{ hub_configuration_publish_secure_logging | default('false') }}"
+  tasks:
+
+    - name: Git checkout
+      ansible.builtin.git:
+        repo: "{{ collection_url }}"
+        dest: "{{ aap_configuration_working_dir }}/collection_repo"
+        version: "{{ branch }}"
+      tags:
+        - git-checkout
+
+    - name: Read in galaxy file
+      ansible.builtin.slurp:
+        src: "{{ aap_configuration_working_dir }}/collection_repo/galaxy.yml"
+      register: file_content
+      tags:
+        - collection-publish
+        - collection-approve
+        - collection-build
+        - pah-namespace
+
+    - name: Get collection Version
+      ansible.builtin.set_fact:
+        collection_version: "{{ file_content['content'] | b64decode |split('\n') |select('match', 'version') | first |split() | last }}"
+        namespace: "{{ file_content['content'] | b64decode |split('\n') |select('match', 'namespace') | first |split() | last | replace('\"', '')  }}"
+        collection_name: "{{ file_content['content'] | b64decode |split('\n') |select('match', 'name:') | first |split() | last | replace('\"', '')  }}"
+      tags:
+        - collection-publish
+        - collection-approve
+        - collection-build
+        - pah-namespace
+
+    - name: Build Collections
+      ansible.hub.ah_build:
+        path: "{{ aap_configuration_working_dir }}/collection_repo"
+        output_path: "{{ aap_configuration_working_dir }}/collection_repo"
+        force: true
+      register: ah_build_results
+      tags:
+        - collection-build
+
+    - name: Create PAH namespace
+      ansible.hub.ah_namespace:
+        name: "{{ namespace }}"
+        state: present
+        ah_host: "{{ aap_hostname | default(omit) }}"
+        ah_username: "{{ aap_username | default(omit) }}"
+        ah_password: "{{ aap_password | default(omit) }}"
+        validate_certs: "{{ aap_validate_certs | default(omit) }}"
+      tags:
+        - pah-namespace
+
+    - name: Publish Collections
+      ansible.hub.ah_collection:
+        namespace: "{{ namespace }}"
+        name: "{{ collection_name }}"
+        version: "{{ collection_version }}"
+        path: "{{ aap_configuration_working_dir }}/collection_repo/{{ namespace }}-{{ collection_name }}-{{ collection_version }}.tar.gz"
+        overwrite_existing: "{{ ah_overwrite_existing }}"
+        ah_host: "{{ aap_hostname | default(omit) }}"
+        ah_username: "{{ aap_username | default(omit) }}"
+        ah_password: "{{ aap_password | default(omit) }}"
+        ah_token: "{{ hub_token | default(omit) }}"
+        validate_certs: "{{ aap_validate_certs | default(omit) }}"
+        request_timeout: "{{ aap_request_timeout | default(omit) }}"
+      tags:
+        - collection-publish
+
+    - name: Approve Collections
+      ansible.hub.ah_approval:
+        namespace: "{{ namespace }}"
+        name: "{{ collection_name }}"
+        version: "{{ collection_version }}"
+        ah_username: "{{ aap_username | default(omit) }}"
+        ah_password: "{{ aap_password | default(omit) }}"
+        ah_token: "{{ hub_token | default(omit) }}"
+        ah_host: "{{ aap_hostname | default(omit) }}"
+        validate_certs: "{{ aap_validate_certs | default(omit) }}"
+        request_timeout: "{{ aap_request_timeout | default(omit) }}"
+      tags:
+        - collection-approve
+...</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Commit all files you have created in the <em>ansible_bootcamp_ci_cd_pipeline</em> directory and push the contents to the Gitea repository</p>
+</div>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">  git add --all
+  git commit -m "Adding Tekton and Ansible resources"
+  git push origin main</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Enter your Gitea credentials when prompted to complete the push. Once the process completes, you should see your changes contained within the Gitea repository.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_3_4_create_and_configure_webhook"><a class="anchor" href="#_3_4_create_and_configure_webhook"></a>3.4: Create and configure Webhook</h3>
+<div class="sect3">
+<h4 id="_3_4_1_add_pipeline_trigger"><a class="anchor" href="#_3_4_1_add_pipeline_trigger"></a>3.4.1: Add Pipeline Trigger</h4>
+<div class="paragraph">
+<p>Add a <em>Trigger</em> to the <em>ansible-collection-ci</em> Pipeline created earlier to enable triggering the pipeline from a webhook.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Launch the <a href="{openshift_cluster_console_url}" target="_blank" rel="noopener">OpenShift Web Console</a></p>
+</li>
+<li>
+<p>In the left hand menu, expand the <em>Pipelines</em> section and select <strong>Pipelines</strong></p>
+</li>
+<li>
+<p>In the <em>Project</em> dropdown at the top of the page, ensure you are in the <strong>aap</strong> project.</p>
+</li>
+<li>
+<p>Click on the link of the <em>ansible-collection-ci</em> pipeline that is contained within the <em>aap</em> project.</p>
+</li>
+<li>
+<p>Select the <em>Actions</em> drop-down button on the right side of the window and select <strong>Add Trigger</strong>
+Enter the following parameters to create the <a href="https://tekton.dev/docs/triggers/eventlisteners" target="_blank" rel="noopener">Event Listener</a>.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Git provider type: <code>gitea-push</code></p>
+</li>
+<li>
+<p>collection-url: <code>$(tt.params.git-repo-url)</code></p>
+</li>
+<li>
+<p>playbook-repo: <code>{gitea_console_url}/{gitea_user}/ansible_bootcamp_ci_cd_pipeline.git</code></p>
+</li>
+<li>
+<p>collection-repo-version: <code>$(tt.params.git-revision)</code></p>
+</li>
+<li>
+<p>shared-workspace: <code>VolumeClaimTemplate</code></p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Click <strong>Add</strong> to create the Trigger.</p>
+</li>
+</ol>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/trigger-config.png" alt="trigger config">
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_3_4_2_copy_event_listener_url"><a class="anchor" href="#_3_4_2_copy_event_listener_url"></a>3.4.2: Copy Event Listener URL</h4>
+<div class="paragraph">
+<p>With the Trigger created, copy the Event Listener URL to be used when creating the webhook in Gitea.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>In the left hand menu, expand the <em>Pipelines</em> section and select <strong>Pipelines</strong></p>
+</li>
+<li>
+<p>Open your OpenShift Container Platform GUI, in the left menu, goto the <em>Pipelines</em> section of the menu and select <strong>Pipelines</strong></p>
+</li>
+<li>
+<p>Click on the link of the <em>ansible-collection-ci</em> pipeline that is contained within the <em>aap</em> project.</p>
+</li>
+<li>
+<p>Click on the link of the <em>ansible-collection-ci</em> pipeline that is now created</p>
+</li>
+<li>
+<p>Under the <em>TriggerTemplates</em> section, copy the Event Listener URL</p>
+</li>
+</ol>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/webhook-url.png" alt="webhook url">
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_3_4_3_create_the_webhook_within_the_gitea_collection_repository"><a class="anchor" href="#_3_4_3_create_the_webhook_within_the_gitea_collection_repository"></a>3.4.3: Create the Webhook within the Gitea Collection Repository</h4>
+<div class="paragraph">
+<p>Once the trigger has been created, the URL will be displayed underneath the <em>TriggerTemplates</em> section. The URL will start with <code><a href="http://el-event-listener-" class="bare">http://el-event-listener-</a></code>.</p>
+</div>
+<div class="paragraph">
+<p>Copy the URL using the copy button next to the URL as it will be used when creating the webhook in Gitea.</p>
+</div>
+<div class="paragraph">
+<p>Navigate to the Gitea repository containing the collection and create the webhook</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Navigate to the <a href="{gitea_console_url}/{gitea_user}/ansible_bootcamp_my_collection" target="_blank" rel="noopener">Gitea ansible_bootcamp_my_collection Repository</a></p>
+</li>
+<li>
+<p>Select the <strong>Settings</strong> tab on the right side of the window</p>
+</li>
+<li>
+<p>Click on the <em>Webhooks</em> section under the <em>Settings</em> box on the left side of the window</p>
+</li>
+<li>
+<p>Click the green <strong>Add Webhook</strong> button on the right side of the window ad select <strong>Gitea</strong> from the dropdown selections</p>
+</li>
+<li>
+<p>Paste the Event Listener URL that was copied previously in the <em>Target URL</em> field</p>
+</li>
+<li>
+<p>Leave the remaining fields at their default values</p>
+</li>
+<li>
+<p>Click on the green <strong>Add Webhook</strong> button at the bottom of the page to create the webhook</p>
+</li>
+</ol>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/gitea-webhook-config.png" alt="gitea webhook config">
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_3_4_4_test_webhook"><a class="anchor" href="#_3_4_4_test_webhook"></a>3.4.4: Test Webhook</h4>
+<div class="paragraph">
+<p>With the webhook created, let&#8217;s send a test payload to confirm that it is working properly.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>From the <a href="{gitea_console_url}/{gitea_user}/ansible_bootcamp_my_collection/settings/hooks" target="<em>blank">Webhooks page</a> of the _ansible_bootcamp_my_collection</em> repository in Gitea, click on the link for the webhook you just created</p>
+</li>
+<li>
+<p>At the bottom of the page, click the <strong>Test Delivery</strong> button to trigger the pipeline</p>
+</li>
+</ol>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/gitea-webhook-test.png" alt="gitea webhook test">
+</div>
+</div>
+<div class="paragraph">
+<p>A <em>Green</em> check mark next to the delivery indicates that the webhook was successfully sent to OpenShift.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+You can see the status of the pipeline by going back into your OpenShift console and navigating to the pipeline you created and clicking on <em>PipelineRuns</em>.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_3_5_update_and_push_new_version_of_ansible_collection_to_gitea"><a class="anchor" href="#_3_5_update_and_push_new_version_of_ansible_collection_to_gitea"></a>3.5: Update and Push New Version of Ansible Collection to Gitea</h3>
+<div class="paragraph">
+<p>Update the Ansible collection created in <a href="#04-managing-content-automation-hub.adoc" class="xref unresolved">Managing Ansible Content with Private Automation Hub</a> by adding a new role called <code>dad_joke</code> that fetches and displays a random dad joke from the <a href="https://icanhazdadjoke.com" target="_blank" rel="noopener">icanhazdadjoke</a> API. In addition, we will add a Molecule test scenario based on our learning <a href="#05-ansible-tdd.adoc" class="xref unresolved">TDD for Ansible</a> section to validate the functionality of the new role.</p>
+</div>
+<div class="paragraph">
+<p>Add the dad_joke role to your collection</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Click on the Ansible extension in the left hand menu of your Dev Spaces workspace</p>
+</li>
+<li>
+<p>Click on <code>Role</code></p>
+</li>
+<li>
+<p>Provide the path for your collection root directory (<code>/projects/devspaces-example/my_pah_project</code>)</p>
+</li>
+<li>
+<p>Name the role <code>dad_joke</code></p>
+</li>
+<li>
+<p>Click <strong>Create</strong> to create the role</p>
+</li>
+</ol>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/devspace-role-create.png" alt="devspace role create">
+</div>
+</div>
+<div class="paragraph">
+<p>A message indicating the role was created successfully should appear in the <em>Logs</em> output.</p>
+</div>
+<div class="sect3">
+<h4 id="_3_5_1_update_the_dad_joke_role"><a class="anchor" href="#_3_5_1_update_the_dad_joke_role"></a>3.5.1: Update the dad_joke role</h4>
+<div class="paragraph">
+<p>Update the contents of the generated <code>main.yml</code> within the <code>dad_joke</code> role to include steps that fetch a random dad joke from the API and display it.</p>
+</div>
+<div class="paragraph">
+<p>Click on the file explorer and expand the <code>roles/dad_joke/tasks</code> directory within the collection. Place the following content within the <code>roles/dad_joke/tasks/main.yml</code> file</p>
+</div>
+<div class="listingblock execute">
+<div class="title">roles/dad_joke/tasks/main.yml</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">---
+
+- name: Fetch a Random Joke from the API
+  ansible.builtin.uri:
+    url: https://icanhazdadjoke.com/
+    method: GET
+    headers:
+      Accept: application/json
+  register: dad_joke_joke_api_response
+
+
+- name: Display the Setup and Punchline
+  ansible.builtin.debug:
+    msg: "{{ dad_joke_joke_api_response.json.joke }}"
+...</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_3_5_2_add_a_molecule_test_scenario"><a class="anchor" href="#_3_5_2_add_a_molecule_test_scenario"></a>3.5.2: Add a molecule test scenario</h4>
+<div class="paragraph">
+<p>Add a Molecule test scenario to validate the functionality of the <code>dad_joke</code> role.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Within the Dev Spaces terminal, navigate to the extensions directory of your collection.  This should be a folder in the root of the collection</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cd /projects/devspaces-example/my_pah_project/extensions</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Initialize the <code>dad_joke</code> Molecule test scenario</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">molecule init scenario dad_joke</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Replace the contents of the <code>extensions/molecule/dad_joke/converge.yml</code> file with the contents below</p>
+<div class="listingblock execute">
+<div class="title">converge.yml</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">---
+
+- name: Converge
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: "Include the dad_joke role"
+      ansible.builtin.include_role:
+        name: ansible_bootcamp.my_collection.dad_joke
+...</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Replace the contents of the <code>extensions/molecule/dad_joke/molecule.yml</code> file with the contents below</p>
+<div class="listingblock execute">
+<div class="title">molecule.yml</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">---
+
+driver:
+  name: default
+platforms:
+  - name: instance
+
+provisioner:
+  name: ansible
+  config_options:
+    defaults:
+      collections_path: ${ANSIBLE_COLLECTIONS_PATH}
+...</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Open the <code>galaxy.yml</code> file at the root of the collection repository and increment the version number to be <code>2.0.0</code></p>
+</li>
+<li>
+<p>Commit and push your code you should now see your pipeline start to run</p>
+</li>
+</ol>
+</div>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cd /projects/devspaces-example/my_pah_project
+git add --all
+git commit -m "Adding dad_joke role and molecule test"
+git push origin main</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+You may be prompted to enter your Gitea credentials to complete the push. Enter the credentials provided in the <a href="#environment-details.adoc" class="xref unresolved" target="_blank" rel="noopener">Environment Details</a> page.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>A PipelineRun should be triggered in OpenShift automatically via the webhook you created earlier. You can monitor the progress of the pipeline from the OpenShift Web Console by navigating to the <em>Pipelines</em> section and selecting <em>PipelineRuns</em>.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_3_6_verify_that_your_updated_collection_is_available_in_private_automation_hub"><a class="anchor" href="#_3_6_verify_that_your_updated_collection_is_available_in_private_automation_hub"></a>3.6: Verify that your updated collection is available in Private Automation Hub</h3>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+This step should be started only after you verify that the Tekton <code>PipelineRun</code> has completed successfully.
+</td>
+</tr>
+</table>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Launch the <a href="{aap_controller_web_url}" target="_blank" rel="noopener">Automation Controller</a> web interface and login using the credentials from the <a href="#environment-details.adoc" class="xref unresolved" target="_blank" rel="noopener">Environment Details</a> page.</p>
+</li>
+<li>
+<p>From the navigation menu on the left, expand <strong>Automation Content</strong> and expand <strong>Collections</strong></p>
+</li>
+<li>
+<p>Verify version <code>2.0.0</code> of your collection is present</p>
+</li>
+</ol>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/PAH-verify.png" alt="PAH verify">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_3_7_install_and_use_the_update_collection_from_pah"><a class="anchor" href="#_3_7_install_and_use_the_update_collection_from_pah"></a>3.7: Install and Use the update collection from PAH</h3>
+<div class="paragraph">
+<p>With the collection published and approved in Private Automation Hub, you can now install and use the updated collection in your local Dev Spaces workspace.</p>
+</div>
+<div class="paragraph">
+<p>In your terminal, run the following commands. These variables will configure <code>ansible-galaxy</code> and <code>ansible-builder</code> to use your PAH instance for the current terminal session.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If you have these environment variables set from the previous lab you do not need to set them again.
+</td>
+</tr>
+</table>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>First, set your Private Automation Hub API token as an environment variable</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"># Set your Private Automation Hub API token
+export PAH_API_TOKEN='YOUR_API_TOKEN_HERE'</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Now, set the remaining environment variables</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"># Set the list of servers Ansible should know about
+export ANSIBLE_GALAXY_SERVER_LIST='published,certified,validated,community'
+
+# Configure the 'published' repository
+export ANSIBLE_GALAXY_SERVER_PUBLISHED_URL={aap_controller_web_url}/pulp_ansible/galaxy/published/
+export ANSIBLE_GALAXY_SERVER_PUBLISHED_TOKEN=$PAH_API_TOKEN
+
+# Configure the 'certified' repository
+export ANSIBLE_GALAXY_SERVER_CERTIFIED_URL={aap_controller_web_url}/pulp_ansible/galaxy/rh-certified/
+export ANSIBLE_GALAXY_SERVER_CERTIFIED_TOKEN=$PAH_API_TOKEN
+
+# Configure the 'validated' repository
+export ANSIBLE_GALAXY_SERVER_VALIDATED_URL={aap_controller_web_url}/pulp_ansible/galaxy/validated/
+export ANSIBLE_GALAXY_SERVER_VALIDATED_TOKEN=$PAH_API_TOKEN
+
+# Configure the 'community' repository
+export ANSIBLE_GALAXY_SERVER_COMMUNITY_URL={aap_controller_web_url}/pulp_ansible/galaxy/community/
+export ANSIBLE_GALAXY_SERVER_COMMUNITY_TOKEN=$PAH_API_TOKEN</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Use <code>ansible-galaxy</code> to install the new version of your collection from Private Automation hub</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"> ansible-galaxy collection install ansible_bootcamp.my_collection</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create the following ansible playbook in a file named <code>test_dad_joke.yml</code> to test the new collection in the <code>playbooks</code> directory of the collection.</p>
+<div class="listingblock execute">
+<div class="title">playbooks/test_dad_joke.yml</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">---
+- name: Random Dad Joke Generator
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  roles:
+    - ansible_bootcamp.my_collection.dad_joke</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>From the root of the collection, execute the playbook and if successful, it should return a Dad Joke</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"> ansible-playbook playbooks/test_dad_joke.yml</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Verify the playbooks runs successfully and returns a dad joke in the output.</p>
+</div>
+</div>
+</div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="index.html">Chapter 2</a></span>
-  <span class="next"><a href="../chapter3/index.html">Chapter 3</a></span>
+  <span class="prev"><a href="index.html">Lab: Creating a CI/CD Pipeline</a></span>
+  <span class="next"><a href="section2.html">Conclusion</a></span>
 </nav>
 </article>
   </div>
